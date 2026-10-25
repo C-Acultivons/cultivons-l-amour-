@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adhésion - Cultivons l'Amour</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f7f4;
+      color: #24352b;
+    }
+    header {
+      background: #176b45;
+      color: white;
+      text-align: center;
+      padding: 28px 16px;
+    }
+    header h1 { margin: 0 0 10px; font-size: 26px; }
+    header p { margin: 0; }
+    main {
+      max-width: 720px;
+      margin: 24px auto;
+      padding: 24px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px #00000012;
+    }
+    h2 { color: #176b45; }
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 16px 0 6px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5ce;
+      border-radius: 7px;
+      font-size: 16px;
+      background: white;
+    }
+    textarea { min-height: 90px; resize: vertical; }
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      border: 0;
+      border-radius: 8px;
+      background: #176b45;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+    }
+    .note { font-size: 14px; color: #59685e; line-height: 1.5; }
+    footer { text-align: center; padding: 20px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>❤️ CULTIVONS L’AMOUR</h1>
+    <p>Formulaire officiel de demande d’adhésion</p>
+    <p>« Agissons maintenant »</p>
+  </header>
+
+  <main>
+    <h2>Demande d’adhésion d’un groupe</h2>
+    <p>Remplissez les informations ci-dessous pour soumettre votre demande au comité de Cultivons l’Amour.</p>
+
+    <form id="adhesionForm">
+      <label for="groupe">Nom du groupe *</label>
+      <input id="groupe" name="groupe" required>
+
+      <label for="province">Province *</label>
+      <input id="province" name="province" required>
+
+      <label for="ville">Ville ou territoire *</label>
+      <input id="ville" name="ville" required>
+
+      <label for="adresse">Adresse du groupe</label>
+      <input id="adresse" name="adresse">
+
+      <label for="creation">Date de création du groupe</label>
+      <input id="creation" name="creation" type="date">
+
+      <label for="membres">Nombre de membres</label>
+      <input id="membres" name="membres" type="number" min="1">
+
+      <label for="objectifs">Objectifs du groupe *</label>
+      <textarea id="objectifs" name="objectifs" required></textarea>
+
+      <label for="activites">Activités déjà réalisées</label>
+      <textarea id="activites" name="activites"></textarea>
+
+      <h2>Responsable du groupe</h2>
+
+      <label for="responsable">Nom complet du responsable *</label>
+      <input id="responsable" name="responsable" required>
+
+      <label for="fonction">Fonction dans le groupe *</label>
+      <input id="fonction" name="fonction" required>
+
+      <label for="telephone">Numéro de téléphone *</label>
+      <input id="telephone" name="telephone" type="tel" required>
+
+      <label for="email">Adresse e-mail</label>
+      <input id="email" name="email" type="email">
+
+      <p class="note">Les champs marqués d’un astérisque (*) sont obligatoires. Vérifiez les informations avant de soumettre votre demande.</p>
+
+      <button type="submit">Préparer ma demande</button>
+      <p id="message" role="status"></p>
+    </form>
+  </main>
+
+  <footer>
+    Cultivons l’Amour (CA) · Solidarité, amour et espoir<br>
+    Contact : cultivonslamourca@gmail.com
+  </footer>
+
+  <script>
+    document.getElementById('adhesionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('message').textContent =
+        "Le formulaire fonctionne, mais l’envoi au comité n’est pas encore activé. Ne fermez pas cette page : la connexion à la base de données reste à configurer.";
+    });
+  </script>
+</body>
+</html>
+  
