@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adhésion - Cultivons l'Amour</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f7f3;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: 20px auto;
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #0001;
+    }
+    h1 { color: #176b3a; text-align: center; }
+    p { line-height: 1.5; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select, textarea {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      background: #176b3a;
+      color: white;
+      border: 0;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    .note { color: #555; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CULTIVONS L’AMOUR</h1>
+    <p>Formulaire d’adhésion</p>
+    <p>Bienvenue ! Ce formulaire est destiné aux personnes qui souhaitent rejoindre notre initiative humanitaire et contribuer à aider les orphelins, les veuves et les familles vulnérables.</p>
+
+    <form id="adhesionForm">
+      <label for="nom">Nom complet</label>
+      <input id="nom" name="nom" required>
+
+      <label for="telephone">Numéro de téléphone</label>
+      <input id="telephone" name="telephone" type="tel" required>
+
+      <label for="ville">Ville ou province</label>
+      <input id="ville" name="ville" required>
+
+      <label for="groupe">Nom du groupe ou de la représentation</label>
+      <input id="groupe" name="groupe" required>
+
+      <label for="motivation">Pourquoi souhaitez-vous adhérer ?</label>
+      <textarea id="motivation" name="motivation" rows="4" required></textarea>
+
+      <button type="submit">Envoyer ma demande</button>
+      <p class="note" id="message">Le formulaire doit encore être connecté à notre système pour transmettre les demandes au comité.</p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("adhesionForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      document.getElementById("message").textContent =
+        "Merci pour votre intérêt ! L'envoi n'est pas encore activé. Veuillez réessayer plus tard.";
+    });
+  </script>
+</body>
+</html>
