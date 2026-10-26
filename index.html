@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -42,41 +43,119 @@
       border-radius: 6px;
       font-size: 16px;
     }
+    button:disabled { opacity: .6; }
     .note { color: #555; font-size: 14px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>CULTIVONS L’AMOUR</h1>
-    <p>Formulaire d’adhésion</p>
-    <p>Bienvenue ! Ce formulaire est destiné aux personnes qui souhaitent rejoindre notre initiative humanitaire et contribuer à aider les orphelins, les veuves et les familles vulnérables.</p>
+    <p><strong>Formulaire officiel d’adhésion</strong></p>
+    <p>Bienvenue ! Rejoignez notre initiative humanitaire pour soutenir les orphelins, les veuves et les familles vulnérables.</p>
 
     <form id="adhesionForm">
-      <label for="nom">Nom complet</label>
-      <input id="nom" name="nom" required>
+      <label for="nom_groupe">Nom du groupe ou de la représentation *</label>
+      <input id="nom_groupe" required>
 
-      <label for="telephone">Numéro de téléphone</label>
-      <input id="telephone" name="telephone" type="tel" required>
+      <label for="province">Province *</label>
+      <input id="province" required>
 
-      <label for="ville">Ville ou province</label>
-      <input id="ville" name="ville" required>
+      <label for="ville">Ville *</label>
+      <input id="ville" required>
 
-      <label for="groupe">Nom du groupe ou de la représentation</label>
-      <input id="groupe" name="groupe" required>
+      <label for="commune">Commune (facultatif)</label>
+      <input id="commune">
 
-      <label for="motivation">Pourquoi souhaitez-vous adhérer ?</label>
-      <textarea id="motivation" name="motivation" rows="4" required></textarea>
+      <label for="adresse">Adresse (facultatif)</label>
+      <input id="adresse">
 
-      <button type="submit">Envoyer ma demande</button>
-      <p class="note" id="message">Le formulaire doit encore être connecté à notre système pour transmettre les demandes au comité.</p>
+      <label for="domaine">Domaine d'action *</label>
+      <select id="domaine" required>
+        <option value="">Choisir un domaine</option>
+        <option value="Humanitaire">Aide humanitaire</option>
+        <option value="Orphelins">Protection des orphelins</option>
+        <option value="Veuves">Soutien aux veuves</option>
+        <option value="Familles vulnérables">Aide aux familles vulnérables</option>
+        <option value="Autre">Autre</option>
+      </select>
+
+      <label for="objectifs">Objectifs du groupe *</label>
+      <textarea id="objectifs" rows="3" required></textarea>
+
+      <label for="activites">Activités prévues (facultatif)</label>
+      <textarea id="activites" rows="3"></textarea>
+
+      <label for="nom_responsable">Nom complet du responsable *</label>
+      <input id="nom_responsable" required>
+
+      <label for="fonction_responsable">Fonction du responsable *</label>
+      <input id="fonction_responsable" placeholder="Ex. : Président, secrétaire..." required>
+
+      <label for="telephone">Numéro de téléphone *</label>
+      <input id="telephone" type="tel" required>
+
+      <label for="email">Adresse e-mail (facultatif)</label>
+      <input id="email" type="email">
+
+      <button id="submitBtn" type="submit">Envoyer ma demande</button>
+      <p class="note" id="message" role="status" aria-live="polite">
+        Les champs marqués d'un * sont obligatoires.
+      </p>
     </form>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    document.getElementById("adhesionForm").addEventListener("submit", function(event) {
+    const SUPABASE_URL = "https://jxjgojkttdikclpdlxsq.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_RGzT_RkhsFrE_ixCEoL6qw_rd8qPGtF";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const form = document.getElementById("adhesionForm");
+    const message = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async function(event) {
       event.preventDefault();
-      document.getElementById("message").textContent =
-        "Merci pour votre intérêt ! L'envoi n'est pas encore activé. Veuillez réessayer plus tard.";
+
+      submitBtn.disabled = true;
+      message.textContent = "Envoi de votre demande en cours...";
+
+      const data = {
+        nom_groupe: document.getElementById("nom_groupe").value.trim(),
+        province: document.getElementById("province").value.trim(),
+        ville: document.getElementById("ville").value.trim(),
+        commune: document.getElementById("commune").value.trim() || null,
+        adresse: document.getElementById("adresse").value.trim() || null,
+        domaine: document.getElementById("domaine").value,
+        objectifs: document.getElementById("objectifs").value.trim(),
+        activites: document.getElementById("activites").value.trim() || null,
+        nom_responsable: document.getElementById("nom_responsable").value.trim(),
+        fonction_responsable: document.getElementById("fonction_responsable").value.trim(),
+        telephone: document.getElementById("telephone").value.trim(),
+        email: document.getElementById("email").value.trim() || null
+      };
+
+      try {
+        const { error } = await supabaseClient
+          .from("adhesions")
+          .insert([data]);
+
+        if (error) throw error;
+
+        message.textContent =
+          "Votre demande a été envoyée avec succès ! Merci de rejoindre CULTIVONS L’AMOUR.";
+        form.reset();
+      } catch (error) {
+        console.error("Erreur d'envoi :", error);
+        message.textContent =
+          "Échec de l'envoi. Vérifiez votre connexion ou contactez le comité si le problème persiste.";
+      } finally {
+        submitBtn.disabled = false;
+      }
     });
   </script>
 </body>
